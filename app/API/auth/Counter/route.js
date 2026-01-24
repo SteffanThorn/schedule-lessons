@@ -18,9 +18,7 @@ export async function POST(request) {
         // Log a message to the server console for debugging
         // Shows a happy face ":D" if incrementing, otherwise shows the action
         console.log(
-            `${
-                action === "increment" ? ":D"
-            } Counter ${counterID} ${action}ed`
+            `${action === "increment" ? ":D" : ""} Counter ${counterID} ${action}ed`
         );
 
         // Return a successful JSON response with the action and counterID
