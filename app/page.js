@@ -1,62 +1,75 @@
 'use client';
-import Banner from '@/components/Banner';
-import Column from '@/components/Column';
 
-export default function Home() {
-  const handleAction = (action) => {
-    console.log(`${action} clicked`);
-  };
+import FloatingParticles from '@/components/FloatingParticle';
+import Header from '@/components/Header';
+import YogaBenefitsColumn from '@/components/YogaBenefitsColumn';
+import TeacherStoryColumn from '@/components/TeacherStoryColumn';
+import { useLanguage } from '@/hooks/useLanguage';
 
-  const columns = [
-    {
-      title: 'Yoga Classes',
-      imageSrc: '/window.svg',
-      imageAlt: 'Yoga',
-      paragraph: 'Join our expert-led yoga sessions designed to strengthen your body and calm your mind.',
-      buttonText: 'Book Now'
-    },
-    {
-      title: 'Meditation',
-      imageSrc: '/globe.svg',
-      imageAlt: 'Meditation',
-      paragraph: 'Discover inner peace with our guided meditation programs to reduce stress.',
-      buttonText: 'Start Free'
-    },
-    {
-      title: 'Wellness',
-      imageSrc: '/vercel.svg',
-      imageAlt: 'Wellness',
-      paragraph: 'Learn holistic wellness techniques from industry professionals.',
-      buttonText: 'Learn More'
-    }
-  ];
+const Index = () => {
+  const { language, t, mounted } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-base-100">
-      <Banner 
-        title="Welcome to Wellness"
-        miniTitle="Discover a path to better health and inner peace with our comprehensive wellness programs."
-        imageSrc="/next.svg"
-        imageAlt="Wellness banner"
-      />
+    <div className="min-h-screen relative overflow-hidden">
+      <FloatingParticles />
       
-      <section className="py-16 px-4">
-        <h2 className="text-4xl font-bold text-center mb-12">Our Services</h2>
-        <div className="flex flex-wrap justify-center gap-6 max-w-7xl mx-auto">
-          {columns.map((col, index) => (
-            <Column
-              key={index}
-              title={col.title}
-              imageSrc={col.imageSrc}
-              imageAlt={col.imageAlt}
-              paragraph={col.paragraph}
-              buttonText={col.buttonText}
-              onButtonClick={() => handleAction(col.title)}
-            />
-          ))}
-        </div>
-      </section>
+      <div className="relative z-10">
+        <Header />
+        
+        {/* Hero Section */}
+        <section className="px-6 pt-8 pb-4">
+          <div className="max-w-7xl mx-auto text-center">
+            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-light 
+                         text-glow animate-fade-in-up">
+              {language === 'zh' ? (
+                <>
+                  寻找你<span className="gradient-text">内心的光</span>
+                </>
+              ) : (
+                <>
+                  Find Your <span className="gradient-text">Inner Light</span>
+                </>
+              )}
+            </h1>
+            <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto 
+                        leading-relaxed animate-fade-in-up animation-delay-200">
+              {mounted ? t('heroSubtitle') : 'Where ancient wisdom meets modern healing, discover the transformative power of mindful movement in the heart of New Zealand.'}
+            </p>
+            
+            {/* Decorative divider */}
+            <div className="mt-12 flex items-center justify-center gap-4 animate-fade-in-up animation-delay-400">
+              <div className="h-px w-24 bg-gradient-to-r from-transparent to-glow-cyan/50" />
+              <div className="w-2 h-2 rounded-full bg-glow-cyan animate-pulse-glow" />
+              <div className="h-px w-24 bg-gradient-to-l from-transparent to-glow-cyan/50" />
+            </div>
+          </div>
+        </section>
+
+        {/* Two Column Section */}
+        <section className="px-6 py-16 md:py-24">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
+              <YogaBenefitsColumn />
+              <TeacherStoryColumn />
+            </div>
+          </div>
+        </section>
+
+        {/* Footer accent */}
+        <footer className="relative z-10 py-12 px-6 border-t border-border/30">
+          <div className="max-w-7xl mx-auto text-center">
+            <p className="text-sm text-muted-foreground">
+              {mounted ? t('copyright') : '© 2026 Luminous Yoga · Auckland, New Zealand'}
+            </p>
+            <p className="mt-2 text-xs text-muted-foreground/60">
+              {mounted ? t('footerMotto') : 'Breathe deeply. Move gently. Live fully.'}
+            </p>
+          </div>
+        </footer>
+      </div>
     </div>
   );
-}
+};
+
+export default Index;
 
